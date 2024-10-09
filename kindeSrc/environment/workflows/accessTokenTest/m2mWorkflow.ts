@@ -1,7 +1,9 @@
-export const workflowSettings = {
+import { onM2MTokenGeneratedEvent, WorkflowSettings, WorkflowTrigger } from "@kinde/infrastructure"
+
+export const workflowSettings: WorkflowSettings = {
     id: "addM2MTokenClaim",
-    trigger: "m2m:token_generation",
-    resetClaims: true,
+    trigger: WorkflowTrigger.M2MTokenGeneration,
+    // resetClaims: true,
     bindings: {
       console: {},
       "kinde.fetch": {},
@@ -15,7 +17,7 @@ export const workflowSettings = {
   };
   
   export default {
-    async handle(event: any) {
+    async handle(event: onM2MTokenGeneratedEvent) {
       return "testing m2m tokens";
     },
   };

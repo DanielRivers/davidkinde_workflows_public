@@ -1,7 +1,9 @@
-export const workflowSettings = {
+import { onUserTokenGeneratedEvent, getKindeAccessTokenHandle, WorkflowSettings, WorkflowTrigger } from "@kinde/infrastructure"
+
+export const workflowSettings: WorkflowSettings = {
     id: "addAccessTokenClaim",
-    trigger: "user:tokens_generation",
-    resetClaims: true,
+    trigger: WorkflowTrigger.UserTokenGeneration,
+    // resetClaims: true,
     timeout: 10000,
     bindings: {
       console: {},
@@ -16,8 +18,10 @@ export const workflowSettings = {
   };
   
   export default {
-    async handle(event: any) {
-      kinde.accessToken.setCustomClaim("hello", "testing world");
+    async handle(event: onUserTokenGeneratedEvent) {
+      const accessToken = getKindeAccessTokenHandle<{ hello: string}>();
+      accessToken.hello = "testing world";
+
       return "testing add user token claim";
     },
   };
